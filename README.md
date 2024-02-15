@@ -2,26 +2,40 @@
 A repo for my implementation of Stormworks Screensharing
 
 
-### Dependency Installation (**PyAutoGUI**, **Pillow**, **Flask**):
+### Dependency Installation:
 * <span style="background-color:#181818"><span style="color:#FFFF00">pip</span> install <span style="color:#23D18B">pyautogui pillow flask</span></span>
 
 
 ### Server:
 After downloading the `server.py` file, and the dependencies for it, you can start it up by running:
 
-* <span style="background-color:#181818"><span style="color:#FFFF00">python</span> server.py <span style="color:#848484">-d</span> <span style="color:#23D18B">35:126</span></span>
-
-The `-d` stands for character **depth**, aka a range specified by a lower and an upper ascii decimal (In this example we used 35 and 126 which correspond to `#` and `~` respectively).<br>
-A narrower range will reduce the color depth, and special characters inside it can casue issues at the client side.
-
+* <span style="background-color:#181818"><span style="color:#FFFF00">python</span> server.py</span>
 
 ### Client:
 You can download the Microcontroller from the workshop, or you can create it manually. I'll go into detail how to do the latter one.
+
+#### There are 5 variables you can change
+* `Width`
+* `Height`
+* `Color`
+* `Start`
+* `End`
+
+Width and Height changes the requested image resolution.<br>
+The color variable can switch RGB to Grayscale and back. (true: RGB, false: Grayscale)<br>
+Start and End specifies the upper and lower ascii decimal range. (For default we used 35 and 126 which correspond to `#` and `~` respectively)
+
+**IMPORTANT:**<br>
+1. A narrower range reduces the color depth.
+2. Certain characters inside the range can casue issues at the client side. (not detecting it as a char)
+
+
+
 #### Steps:
-1. Create a Microcontroller with one video output<br>
+1. Create a Microcontroller with one video and one number output<br>
 ![](https://github.com/garaibence/ScreenWorks/blob/main/out.png?raw=true)
 
-2. Grab a Lua Script block from the TAB menu, and connect the video output to the output you made earlier.<br>
+2. Grab a Lua Script block from the TAB menu, and connect it up as it's shown in the image below.<br>
 ![](https://github.com/garaibence/ScreenWorks/blob/main/microcontroller.png?raw=true)
 
 3. Now open the Lua Script block and click on `Edit Script`.

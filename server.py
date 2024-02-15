@@ -5,17 +5,20 @@
 from flask import Flask, request, Response
 import pyautogui
 from PIL import Image
-import argparse
+from time import time
 
-parser = argparse.ArgumentParser(description="Goofy aah screenshare for sw")
-parser.add_argument("-d", help="The fnuuy ( e.g., 35:126 )")
-args = parser.parse_args()
-reg = args.d.split(':')
+unix = 0
+unix_prev = 0
 
 app = Flask(__name__)
 
 @app.route('/data')
 def get_pixel_data():
+
+    start = int(request.args.get('start', default="35"))
+    end = int(request.args.get('end', default="126"))
+    divider = 255 / (end - start)
+
     width = int(request.args.get('w', default=1))
     height = int(request.args.get('h', default=1))
     colour = request.args.get('c', default="true")
@@ -23,11 +26,8 @@ def get_pixel_data():
     screen = pyautogui.screenshot()
     img = screen.resize((width, height), Image.LANCZOS)
 
-    start = int(reg[0])
-    end   = int(reg[1])
-    divider = 255 / (end - start)
-
     pixel_data = ""
+    
     for y in range(height):
         for x in range(width):
             pixel = img.getpixel((x, y))
@@ -35,6 +35,18 @@ def get_pixel_data():
                 pixel_data += f"{chr(int(pixel[0]/divider)+start)}{chr(int(pixel[1]/divider)+start)}{chr(int(pixel[2]/divider)+start)}"
             elif colour == "false":
                 pixel_data += f"{chr(int(((pixel[0]/divider+start)+(pixel[1]/divider+start)+(pixel[2]/divider+start))/3))}"
+    
+    global unix
+    global unix_prev
+
+    unix_prev = unix
+    unix = round(time()*1000)
+    fps = round(1000/(unix-unix_prev),3)
+
+    if fps < 10.0:
+        pixel_data += f"0{fps}"
+    else:
+        pixel_data += str(fps)
 
     return Response(pixel_data, content_type='text/plain')
 
