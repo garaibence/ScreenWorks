@@ -33,10 +33,10 @@ Start and End specifies the upper and lower ascii decimal range. (For default we
 
 #### Steps:
 1. Create a Microcontroller with one video and one number output<br>
-![](https://github.com/garaibence/ScreenWorks/blob/main/out.png?raw=true)
+![](https://github.com/garaibence/ScreenWorks/blob/main/outputs.png?raw=true)
 
 2. Grab a Lua Script block from the TAB menu, and connect it up as it's shown in the image below.<br>
-![](https://github.com/garaibence/ScreenWorks/blob/main/microcontroller.png?raw=true)
+![](https://github.com/garaibence/ScreenWorks/blob/main/microcontroller_layout.png?raw=true)
 
 3. Now open the Lua Script block and click on `Edit Script`.
 
